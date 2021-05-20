@@ -5,7 +5,7 @@ import os
 
 pyautogui.FAILSAFE = False
 
-def main():
+def main(ip):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     hostname = socket.gethostname()
@@ -36,10 +36,15 @@ def main():
                 data = data.replace("move\n", "")
                 data = data.split(",")
                 
-                x = float(data[0])
-                y = float(data[1])
-                # print(x, y)
-                pyautogui.move(x, -y)
+                try:
+                    x = float(data[0])
+                    y = float(data[1])
+                    # print(x, y)
+                    pyautogui.move(x, -y)
+                    
+                except Exception as e:
+                    pass
+                    # print("failed to move")
 
             elif "touch" in data:
                 # print(data)
@@ -57,15 +62,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
-    # try:
-    #     main()
-
-    # except KeyboardInterrupt:
-    #     s.close()
-    #     print('Interrupted')
-    #     try:
-    #         sys.exit(0)
-    #     except SystemExit:
-    #         os._exit(0)
+    ip = input("Enter local IP addres: ")
+    main(ip)
 
